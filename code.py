@@ -67,12 +67,10 @@ while True:
             if key_event.key_number is 8:
                 macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
             if key_event.key_number is 9:
-                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
-            if key_event.key_number is 10:
                 macropad.consumer_control.send(macropad.ConsumerControlCode.SCAN_PREVIOUS_TRACK)
-            if key_event.key_number is 11:
+            if key_event.key_number is 10:
                 macropad.consumer_control.send(macropad.ConsumerControlCode.PLAY_PAUSE)
-            if key_event.key_number is 12:
+            if key_event.key_number is 11:
                 macropad.consumer_control.send(macropad.ConsumerControlCode.SCAN_NEXT_TRACK)
             text_lines[0].text = f"Key pressed: {key_event.key_number}"
         else: # Keyup
