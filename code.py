@@ -7,6 +7,16 @@ from adafruit_macropad import MacroPad
 
 macropad = MacroPad()
 
+# Media (consumer) control codes enum:
+# https://github.com/adafruit/Adafruit_CircuitPython_HID/blob/main/adafruit_hid/consumer_control_code.py
+
+# Standard Keyboard codes enum:
+# https://github.com/adafruit/Adafruit_CircuitPython_HID/blob/main/adafruit_hid/keycode.py
+
+# Keyboard class supports send(*keycodes) that automatically presses and released
+# Press(*keycodes) and release(*keycodes) also supported
+# See: https://github.com/adafruit/Adafruit_CircuitPython_HID/blob/main/adafruit_hid/keyboard.py
+
 # Cannot be updated after initialization
 # Uses Simple Text Display library
 text_lines = macropad.display_text(title="Swiggity Swooty") 
@@ -15,6 +25,8 @@ text_lines = macropad.display_text(title="Swiggity Swooty")
 # Set default key colors
 for pixel in range(12):
     macropad.pixels[pixel] = colorwheel((pixel / 12 * 256))
+
+lastEncoderPosition = 0
 
 # Main scan loop
 while True:
@@ -28,6 +40,8 @@ while True:
                 macropad.keyboard.send(macropad.Keycode.CONTROL, macropad.Keycode.C)
                 macropad.keyboard.send(macropad.Keycode.WINDOWS, macropad.Keycode.R)
                 time.sleep(0.5)
+
+                # TODO:  How to send a string instead of each key?
                 macropad.keyboard.send(macropad.Keycode.N)
                 macropad.keyboard.send(macropad.Keycode.O)
                 macropad.keyboard.send(macropad.Keycode.T)
@@ -39,31 +53,45 @@ while True:
                 time.sleep(0.5)
                 macropad.keyboard.send(macropad.Keycode.CONTROL, macropad.Keycode.V)
             if key_event.key_number is 2:
-                macropad.keyboard.send(macropad.Keycode.A)
+                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
             if key_event.key_number is 3:
-                macropad.keyboard.send(macropad.Keycode.A)
+                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
             if key_event.key_number is 4:
-                macropad.keyboard.send(macropad.Keycode.A)
+                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
             if key_event.key_number is 5:
-                macropad.keyboard.send(macropad.Keycode.A)
+                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
             if key_event.key_number is 6:
-                macropad.keyboard.send(macropad.Keycode.A)
+                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
             if key_event.key_number is 7:
-                macropad.keyboard.send(macropad.Keycode.A)
+                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
             if key_event.key_number is 8:
-                macropad.keyboard.send(macropad.Keycode.A)
+                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
             if key_event.key_number is 9:
-                macropad.keyboard.send(macropad.Keycode.A)
+                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
             if key_event.key_number is 10:
-                macropad.keyboard.send(macropad.Keycode.A)
+                macropad.consumer_control.send(macropad.ConsumerControlCode.SCAN_PREVIOUS_TRACK)
             if key_event.key_number is 11:
-                macropad.keyboard.send(macropad.Keycode.A)
+                macropad.consumer_control.send(macropad.ConsumerControlCode.PLAY_PAUSE)
             if key_event.key_number is 12:
-                macropad.keyboard.send(macropad.Keycode.A)
+                macropad.consumer_control.send(macropad.ConsumerControlCode.SCAN_NEXT_TRACK)
             text_lines[0].text = f"Key pressed: {key_event.key_number}"
         else: # Keyup
             macropad.pixels[key_event.key_number] = colorwheel((key_event.key_number / 12 * 256))
-        
+    # End key if block
+    macropad.encoder_switch_debounced.update()
+
+    if macropad.encoder > lastEncoderPosition:
+        # increase volume
+        macropad.consumer_control.send(macropad.ConsumerControlCode.VOLUME_INCREMENT)
+    if macropad.encoder < lastEncoderPosition:
+        # decrease volume
+        macropad.consumer_control.send(macropad.ConsumerControlCode.VOLUME_DECREMENT)
+    lastEncoderPosition = macropad.encoder
+
+    if macropad.encoder_switch_debounced.pressed:
+        # mute/unmute
+        macropad.consumer_control.send(macropad.ConsumerControlCode.MUTE)
+
     text_lines[1].text = f"Encoder: {macropad.encoder}"
     text_lines[2].text = f"Encoder switch: {macropad.encoder_switch}"
     text_lines.show()
