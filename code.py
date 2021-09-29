@@ -7,6 +7,9 @@ from adafruit_macropad import MacroPad
 
 macropad = MacroPad()
 
+# MacroPad repo:
+# https://github.com/adafruit/Adafruit_CircuitPython_MacroPad
+
 # Media (consumer) control codes enum:
 # https://github.com/adafruit/Adafruit_CircuitPython_HID/blob/main/adafruit_hid/consumer_control_code.py
 
@@ -40,32 +43,23 @@ while True:
                 macropad.keyboard.send(macropad.Keycode.CONTROL, macropad.Keycode.C)
                 macropad.keyboard.send(macropad.Keycode.WINDOWS, macropad.Keycode.R)
                 time.sleep(0.5)
-
-                # TODO:  How to send a string instead of each key?
-                macropad.keyboard.send(macropad.Keycode.N)
-                macropad.keyboard.send(macropad.Keycode.O)
-                macropad.keyboard.send(macropad.Keycode.T)
-                macropad.keyboard.send(macropad.Keycode.E)
-                macropad.keyboard.send(macropad.Keycode.P)
-                macropad.keyboard.send(macropad.Keycode.A)
-                macropad.keyboard.send(macropad.Keycode.D)
-                macropad.keyboard.send(macropad.Keycode.ENTER)
+                macropad.keyboard_layout.write("NOTEPAD\n")
                 time.sleep(0.5)
                 macropad.keyboard.send(macropad.Keycode.CONTROL, macropad.Keycode.V)
             if key_event.key_number is 2:
-                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
+                time.sleep(0.01)
             if key_event.key_number is 3:
-                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
+                time.sleep(0.01)
             if key_event.key_number is 4:
-                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
+                time.sleep(0.01)
             if key_event.key_number is 5:
-                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
+                time.sleep(0.01)
             if key_event.key_number is 6:
-                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
+                time.sleep(0.01)
             if key_event.key_number is 7:
-                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
+                time.sleep(0.01)
             if key_event.key_number is 8:
-                macropad.keyboard.send(macropad.Keycode.CAPS_LOCK)
+                time.sleep(0.01)
             if key_event.key_number is 9:
                 macropad.consumer_control.send(macropad.ConsumerControlCode.SCAN_PREVIOUS_TRACK)
             if key_event.key_number is 10:
