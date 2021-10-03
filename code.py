@@ -7,19 +7,6 @@ from adafruit_macropad import MacroPad
 
 macropad = MacroPad()
 
-# MacroPad repo:
-# https://github.com/adafruit/Adafruit_CircuitPython_MacroPad
-
-# Media (consumer) control codes enum:
-# https://github.com/adafruit/Adafruit_CircuitPython_HID/blob/main/adafruit_hid/consumer_control_code.py
-
-# Standard Keyboard codes enum:
-# https://github.com/adafruit/Adafruit_CircuitPython_HID/blob/main/adafruit_hid/keycode.py
-
-# Keyboard class supports send(*keycodes) that automatically presses and released
-# Press(*keycodes) and release(*keycodes) also supported
-# See: https://github.com/adafruit/Adafruit_CircuitPython_HID/blob/main/adafruit_hid/keyboard.py
-
 # Cannot be updated after initialization
 # Uses Simple Text Display library
 text_lines = macropad.display_text(title="Swiggity Swooty") 
