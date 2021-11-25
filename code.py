@@ -25,6 +25,7 @@ while True:
         if key_event.pressed: # a.k.a. Keydown
             macropad.pixels[key_event.key_number] = (100, 100, 100)
             if key_event.key_number is 0:
+                macropad.keyboard.send(macropad.Keycode.WINDOWS, macropad.Keycode.D)
                 macropad.keyboard.send(macropad.Keycode.WINDOWS, macropad.Keycode.L)
             if key_event.key_number is 1:
                 macropad.keyboard.send(macropad.Keycode.CONTROL, macropad.Keycode.C)
